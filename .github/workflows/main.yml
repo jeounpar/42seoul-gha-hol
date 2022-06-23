@@ -1,10 +1,6 @@
 name: "My first github action"
 
-# 어느 시점에서 시작이 되는지 설정
 on: push
-
-env:
-    WORKFLOW_LEVEL: "THIS VALUE COMES FROM THE WORKFLOW LEVEL"
 
 jobs:
     first-job:
@@ -12,35 +8,16 @@ jobs:
 
         runs-on: ubuntu-latest
 
-        env:
-            JOB_LEVEL_1: "THIS COMES FROM JOB LEVEL1"
-
         steps:
-            - name: Say Hello World 1
+            - name: set output value
+              id: first
               shell: bash
-              env:
-                  STEP_LEVEL_1: "THIS COMES FROM STEP LEVEL1"
               run: |
-                  echo "Hello World from step 1"
-                  echo "STEP_VALUE_1='THIS IS SET BY STEP 1'" >> $GITHUB_ENV
+                  first_value="This is the first output value"
 
-            - name: Say Hello World 2
-              shell: pwsh
-              run: |
-                  echo "Hello World from step 2"
-    second-job:
-        name: "second job"
+                  echo "::set-output name=my_first_value::$first_value"
 
-        runs-on: ubuntu-latest
-
-        env:
-            JOB_LEVEL_1: "THIS COMES FROM JOB LEVEL1"
-
-        steps:
-            - name: Say Hello World 1
+            - name: get output value
               shell: bash
-              env:
-                  STEP_LEVEL_2: "THIS COMES FROM STEP LEVEL2"
               run: |
-                  echo "Hello World from step 1"
-                  echo $STEP_VALUE_1
+                  echo ${{ steps.first.outputs.my_first_value }}
