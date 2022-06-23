@@ -3,15 +3,47 @@ name: "My first github action"
 # 어느 시점에서 시작이 되는지 설정
 on: push
 
+env:
+    WORKFLOW_LEVEL: "THIS VALUE COMES FROM THE WORKFLOW LEVEL"
+
 jobs:
     first-job:
         name: "first job"
 
         runs-on: ubuntu-latest
 
+        env:
+            JOB_LEVEL_1: "THIS COMES FROM JOB LEVEL1"
+
         steps:
             - name: Say Hello World 1
               shell: bash
+              env:
+                  STEP_LEVEL_1: "THIS COMES FROM STEP LEVEL1"
+              run: |
+                  echo "Hello World from step 1"
+                  echo $WORKFLOW_LEVEL
+                  echo $JOB_LEVEL_1
+                  echo $STEP_LEVEL_1
+
+            - name: Say Hello World 2
+              shell: pwsh
+              run: |
+                  echo "Hello World from step 2"
+
+    second-job:
+        name: "second job"
+
+        runs-on: ubuntu-latest
+
+        env:
+            JOB_LEVEL_2: "THIS COMES FROM JOB LEVEL2"
+
+        steps:
+            - name: Say Hello World 1
+              shell: bash
+              env:
+                  STEP_LEVEL_2: "THIS COMES FROM STEP LEVEL2"
               run: |
                   echo "Hello World from step 1"
 
