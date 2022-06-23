@@ -17,4 +17,4 @@ jobs:
               id: first
               shell: bash
               run: |
-                  echo: "OS : ${{ matrix.os }}"
+                  echo "OS: ${{ matrix.os }}"
